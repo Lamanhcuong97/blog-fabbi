@@ -6,18 +6,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Repositories\PostRepository;
+use App\Repositories\CategoryRepository;
+use App\Http\Requests\PostRequest;
 
 class PostsController extends Controller
 {
-    protected $repository;
+    protected $repository, $categoryRepository;
 
     /**
      * Contructor
      *
      * @param PostRepository $repository
      */
-    public function __construct(PostRepository $repository){
+    public function __construct(PostRepository $repository, CategoryRepository $categoryRepository){
         $this->repository = $repository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -29,7 +32,7 @@ class PostsController extends Controller
     {
         $posts = $this->repository->index();
 
-        return view('admin.posts.index', compact('posts'));
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -39,7 +42,9 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = $this->categoryRepository->all();
+
+        return view('posts.create', compact('categories'));
     }
 
     /**
@@ -48,12 +53,12 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         $data = $request->all();
         $post = $this->repository->store($data);
 
-        return $this->redirect(route('admin.posts.index'))->with('success', 'Create post successful');
+        return redirect(route('admin.posts.index'))->with('success', 'Create post successful');
     }
 
     /**
@@ -66,7 +71,7 @@ class PostsController extends Controller
     {
         $post = $this->repository->find($id);
 
-        return view('admin.posts.show', compact('post'));
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -78,8 +83,9 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = $this->repository->find($id);
-
-        return view('admin.posts.edit', compact('post'));
+        $categories = $this->categoryRepository->all();
+        
+        return view('posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -89,12 +95,12 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
         $data = $request->all();
-        $post =$this->repository->update($data);
+        $post =$this->repository->update( $id, $data);
 
-        return $this->redirect(route('admin.posts.index'))->with('success', 'Edit post successful');
+        return redirect(route('admin.posts.index'))->with('success', 'Edit post successful');
 
     }
 
@@ -108,6 +114,6 @@ class PostsController extends Controller
     {
         $post = $this->repository->destroy($id);
 
-        return $this->redirect(route('admin.posts.index'))->with('success', 'Delete post successful');
+        return redirect(route('admin.posts.index'))->with('success', 'Delete post successful');
     }
 }
