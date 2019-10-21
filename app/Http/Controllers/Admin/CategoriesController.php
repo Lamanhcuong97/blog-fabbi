@@ -4,21 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\requestCategory;
 use App\Models\Category;
-use App\Repositories\CategoryRepository;
+use App\Repositories\Category\CategoryRepository;
 
 class CategoriesController extends Controller
 {
-    protected $repository;
+    protected $CategoryRepository;
     
-    /**
-     * Contructor
-     *
-     * @param CategoryRepository $repository
-     */
-    public function __construct(CategoryRepository $repository){
-        $this->repository = $repository;
+    public function __construct(CategoryRepository $CategoryRepository)
+    {
+        $this->CategoryRepository = $CategoryRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,9 +24,9 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = $this->repository->index();        
-        
-        return view('admin.categories.index', compact('categories'));
+        $categories = $this->CategoryRepository->index();
+
+        return view("categories.index", compact("categories"));
     }
 
     /**
@@ -38,7 +36,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view("categories.create");
     }
 
     /**
@@ -47,12 +45,11 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(requestCategory $request)
     {
         $data = $request->all();
-        $category = $this->repository->store($data);
-
-        return $this->redirect(route('admin.categories.index'))->with('success', 'Create category successful');
+        $createSucces = $this->CategoryRepository->create($data);
+        return redirect()->back()->with('message', 'success');
     }
 
     /**
@@ -63,7 +60,7 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        $category = $this->repository->find($id);
+        $category = $this->CategoryRepository->find($id);
 
         return view('admin.categories.show', compact('category'));
     }
@@ -76,9 +73,9 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        $category = $this->repository->find($id);
+        $category = $this->CategoryRepository->find($id);
 
-        return view('admin.categories.edit', compact('category'));
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -88,12 +85,12 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(requestCategory $request, $id)
     {
         $data = $request->all();
-        $category = $this->repository->update($data);
+        $category = $this->CategoryRepository->update($id, $data);
 
-        return $this->redirect(route('admin.categories.index'))->with('success', 'Edit category successful');
+        return redirect(route('admin.categories.index'))->with('message', 'success');
     }
 
     /**
@@ -104,8 +101,9 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $category = $this->repository->destroy($id);
+        $category = $this->CategoryRepository->destroy($id);
 
-        return $this->redirect(route('admin.categories.index'))->with('success', 'Delete category successful');
+        return redirect(route('admin.categories.index'))->with('success', 'Delete category successful');
     }
 }
+ 
