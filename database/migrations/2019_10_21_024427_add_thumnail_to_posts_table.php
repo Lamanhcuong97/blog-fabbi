@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsAdminToUsersTable extends Migration
+class AddThumnailToPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddIsAdminToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('isAdmin');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->string('thumnail');
         });
     }
 
@@ -25,8 +25,8 @@ class AddIsAdminToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('isAdmin');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('thumnail');
         });
     }
 }
