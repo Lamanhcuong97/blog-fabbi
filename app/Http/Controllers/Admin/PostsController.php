@@ -4,9 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Repositories\PostRepository;
 
 class PostsController extends Controller
 {
+    protected $repository;
+
+    /**
+     * Contructor
+     *
+     * @param PostRepository $repository
+     */
+    public function __construct(PostRepository $repository){
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +27,9 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
+        $posts = $this->repository->index();
+
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -24,7 +39,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -35,7 +50,10 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $post = $this->repository->store($data);
+
+        return $this->redirect(route('admin.posts.index'))->with('success', 'Create post successful');
     }
 
     /**
@@ -46,7 +64,9 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = $this->repository->find($id);
+
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
@@ -57,7 +77,9 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = $this->repository->find($id);
+
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -69,7 +91,11 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        $post =$this->repository->update($data);
+
+        return $this->redirect(route('admin.posts.index'))->with('success', 'Edit post successful');
+
     }
 
     /**
@@ -80,6 +106,8 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = $this->repository->destroy($id);
+
+        return $this->redirect(route('admin.posts.index'))->with('success', 'Delete post successful');
     }
 }
