@@ -3,6 +3,8 @@
 namespace App\Repositories;
 use App\Repositories\RepositoryInterface;
 use App\Models\Post;
+use DB;
+use Auth;
 
 class PostRepository implements RepositoryInterface{
     protected $model;
@@ -65,10 +67,13 @@ class PostRepository implements RepositoryInterface{
 
         DB::beginTransaction();
         try {
-            $category_id = $data['category_id'];
-            unset($data['category_id']);
-            $post = $this->model->insert($data);
-            $post->categories()->attach($category_id);
+            $categories_id = $data['categories'];
+            unset($data['categories']);
+            unset($data['_token']);
+            $data['thumnail'] = 'image/noImage/png';
+            $data['user_id'] =  Auth::id();
+            $post = $this->model->create($data);
+            $post->categories()->attach($categories_id);
             DB::commit();
                 
             return true;
@@ -104,11 +109,14 @@ class PostRepository implements RepositoryInterface{
     public function update($id, $data){
         DB::beginTransaction();
         try {
-            $category_id = $data['category_id'];
-            unset($data['category_id']);
+            $categories_id = $data['categories'];
+            unset($data['categories']);
+            unset($data['_token']);
+            $data['thumnail'] = 'image/noImage/png';
+            $data['user_id'] =  Auth::id();
             $post = $this->model->findOrFail($id);
-            $post = $categor->update($data);
-            $post->categories()->sync($category_id);
+            $post->update($data);
+            $post->categories()->sync($categories_id);
             DB::commit();
                 
             return true;
@@ -128,7 +136,7 @@ class PostRepository implements RepositoryInterface{
      * @return int
      */
     public function destroy($id){
-        Review::deleting(function($post){
+        Post::deleting(function($post){
             $post->categories()->detach();
         });
 
