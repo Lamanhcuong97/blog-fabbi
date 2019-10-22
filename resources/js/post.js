@@ -15,5 +15,28 @@
         }
     }
 
+   
+    
+
 
 })(jQuery);
+
+$(document).ready( function(){
+    var url = $('#table-posts').attr('data-url');
+    $('#table-posts').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: url,
+            columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'title', name: 'title' },
+                    { data: 'content', name: 'content' },
+                    { data: 'author', name: 'author'},
+                    { data: 'categories', name: 'categories' },
+                    { data: 'thumnail', name: 'thumnail' },
+                    { data: 'created_at', name: 'created_at' },
+                    { data: 'updated_at', name: 'updated_at' },
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                    ]
+    });
+});

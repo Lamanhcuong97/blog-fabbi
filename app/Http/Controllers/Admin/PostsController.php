@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Repositories\Post\PostRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Http\Requests\PostRequest;
+use DataTables;
 
 class PostsController extends Controller
 {
@@ -28,11 +29,37 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = $this->PostRepository->index();
+        return view('posts.index');
+    }
 
-        return view('posts.index', compact('posts'));
+    public function list() {
+        $data = $this->PostRepository->index();
+
+        return  Datatables::of($data)
+                ->addColumn('author', function($row){
+
+                        return $row->user->name ;
+                })
+                ->addColumn('categories', function($row){
+
+                        return $row->categories->pluck('name');
+                })
+                ->addColumn('thumnail', function($row){
+                        $url= asset('storage/'.$row->thumnail);
+                        $img = "<img src='".$url."' border='0' width='40' class='img-rounded' align='center' />";
+
+                        return $img;
+                })
+                ->addColumn('action', function($row){
+                       $action = "<a href='". route('admin.posts.edit', $row->id)."' class='btn btn-warning'>". __('edit')."</a><form action='".route('admin.posts.destroy', $row->id) ."' method='post'> <input type='hidden' name='_token' value='".csrf_token()."'>
+                       <input type='hidden' name='_method' value='DELETE'><button class='btn btn-danger'>". __("delete") ."</button></form>";
+                        return $action;
+                })
+                ->rawColumns(['action', 'thumnail'])
+                ->make(true);
+
     }
 
     /**

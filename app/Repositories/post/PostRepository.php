@@ -7,6 +7,7 @@ use DB;
 use Auth;
 use App\Repositories\RepositoryAbstract;
 
+
 class PostRepository extends RepositoryAbstract implements PostRepositoryInterface{
     /**
      * Construct
@@ -53,7 +54,7 @@ class PostRepository extends RepositoryAbstract implements PostRepositoryInterfa
      * @return Collection|Paginator
      */
     public function index($data = []){
-        $posts = $this->model->with(['user', 'categories'])->orderBy('updated_at', 'DESC')->paginate(10);
+        $posts = $this->model->with(['user', 'categories'])->orderBy('updated_at', 'DESC')->get();
 
         return $posts;
     }
