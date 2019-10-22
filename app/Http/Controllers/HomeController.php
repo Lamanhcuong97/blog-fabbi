@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\Post\PostRepositoryInterface;
 
 class HomeController extends Controller
 {
+    protected $PostRepository;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(PostRepositoryInterface $PostRepository)
     {
-        $this->middleware('auth');
+        $this->PostRepository = $PostRepository;
     }
 
     /**
@@ -23,6 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $posts = $this->PostRepository->index();
+
+        return view('home', compact('posts'));
+    }
+
+    public function show($id){
+        $post = $this->PostRepository->find($id);
+
+        return view('show', compact('post'));
     }
 }

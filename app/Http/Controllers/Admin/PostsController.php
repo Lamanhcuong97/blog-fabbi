@@ -70,8 +70,9 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = $this->PostRepository->find($id);
+        $categories = [];
 
-        return view('posts.show', compact('post'));
+        return view('posts.show', compact('post','categories'));
     }
 
     /**
