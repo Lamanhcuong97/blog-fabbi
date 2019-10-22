@@ -5,22 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
-use App\Repositories\PostRepository;
-use App\Repositories\CategoryRepository;
+use App\Repositories\Post\PostRepositoryInterface;
+use App\Repositories\category\CategoryRepositoryInterface;
 use App\Http\Requests\PostRequest;
 
 class PostsController extends Controller
 {
-    protected $repository, $categoryRepository;
+    protected $PostRepository, $CategoryRepository;
 
     /**
      * Contructor
      *
-     * @param PostRepository $repository
+     * @param PostRepositoryInterface $repository
      */
-    public function __construct(PostRepository $repository, CategoryRepository $categoryRepository){
-        $this->repository = $repository;
-        $this->categoryRepository = $categoryRepository;
+    public function __construct(PostRepositoryInterface $PostRepository, CategoryRepositoryInterface $CategoryRepository){
+        $this->PostRepository = $PostRepository;
+        $this->CategoryRepository = $CategoryRepository;
     }
 
     /**
@@ -30,7 +30,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = $this->repository->index();
+        $posts = $this->PostRepository->index();
 
         return view('posts.index', compact('posts'));
     }
@@ -42,7 +42,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        $categories = $this->categoryRepository->all();
+        $categories = $this->CategoryRepository->all();
 
         return view('posts.create', compact('categories'));
     }
@@ -56,7 +56,7 @@ class PostsController extends Controller
     public function store(PostRequest $request)
     {
         $data = $request->all();
-        $post = $this->repository->store($data);
+        $post = $this->PostRepository->store($data);
 
         return redirect(route('admin.posts.index'))->with('success', 'Create post successful');
     }
@@ -69,7 +69,7 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = $this->repository->find($id);
+        $post = $this->PostRepository->find($id);
 
         return view('posts.show', compact('post'));
     }
@@ -82,8 +82,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        $post = $this->repository->find($id);
-        $categories = $this->categoryRepository->all();
+        $post = $this->PostRepository->find($id);
+        $categories = $this->CategoryRepository->all();
         
         return view('posts.edit', compact('post', 'categories'));
     }
@@ -98,7 +98,7 @@ class PostsController extends Controller
     public function update(PostRequest $request, $id)
     {
         $data = $request->all();
-        $post =$this->repository->update( $id, $data);
+        $post =$this->PostRepository->update( $id, $data);
 
         return redirect(route('admin.posts.index'))->with('success', 'Edit post successful');
 
@@ -112,7 +112,7 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        $post = $this->repository->destroy($id);
+        $post = $this->PostRepository->destroy($id);
 
         return redirect(route('admin.posts.index'))->with('success', 'Delete post successful');
     }
