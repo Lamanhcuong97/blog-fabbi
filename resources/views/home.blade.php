@@ -3,18 +3,42 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Dashboard</div>
-
+                <div class="card-header">{{ __('messages.ListPost') }}</div>
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
+                   <table class="table">
+                       <thead>
+                           <tr>
+                               <th>No</th>
+                               <th>Title</th>
+                               <th>Content</th>
+                               <th>Author</th>
+                               <th>Categories</th>
+                               <th>Created_at</th>
+                               <th>Updated_at</th>
+                           </tr>
+                       </thead>
+                       <tbody>
+                            @php  
+                                $i = 1;
+                            @endphp
+                            @foreach( $posts as $post )
+                                <tr>
+                                    <td scope="row">{{ $post->id }}</td>
+                                    <td><a href="{{route('showPost', $post->id)}}" >{{ $post->title ?? ''}}</a></td>
+                                    <td>{{ $post->content ?? ''}}</td>
+                                    <td>{{ $post->user->name ?? ''}}</td>
+                                    <td>{!! $post->categories->pluck('name') !!}</td>
+                                    <td>{{ $post->created_at ?? ''}}</td>
+                                    <td>{{ $post->updated_at ?? ''}}</td>
+                                </tr>
+                           @endforeach
+                           
+                       </tbody>
+                       
+                   </table>
+                   {{ $posts->links() }}
                 </div>
             </div>
         </div>

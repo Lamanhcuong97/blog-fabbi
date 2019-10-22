@@ -27,16 +27,16 @@
                             @endphp
                             @foreach($posts as $post)
                                 <tr>
-                                    <td scope="row">{{$post->id}}</td>
-                                    <td><a href="{{route('admin.posts.show', $post->id)}}" >{{ $post->title ?? ''}}</a></td>
+                                    <td scope="row">{{ $post->id }}</td>
+                                    <td><a href="{{ route('admin.posts.show', $post->id) }}" >{{ $post->title ?? ''}}</a></td>
                                     <td>{{ $post->content ?? ''}}</td>
                                     <td>{{ $post->user->name ?? ''}}</td>
                                     <td>{!! $post->categories->pluck('name') !!}</td>
                                     <td>{{ $post->created_at ?? ''}}</td>
                                     <td>{{ $post->updated_at ?? ''}}</td>
                                     <td>
-                                        <a href="{{route('admin.posts.edit', $post->id)}}" class="btn btn-warning">{{ __('edit') }}</a>
-                                        <form action="{{route('admin.posts.destroy', $post->id)}}" method="post">
+                                        <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-warning">{{ __('edit') }}</a>
+                                        <form action="{{ route('admin.posts.destroy', $post->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                             <button class="btn btn-danger">{{ __('delete') }}</button>

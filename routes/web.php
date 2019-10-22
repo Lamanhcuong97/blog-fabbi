@@ -11,12 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::prefix('admin')
     ->name('admin.')
+    ->middleware('isAdmin')
     ->group(function(){
     
     Route::resource('posts', 'Admin\PostsController');
@@ -26,4 +24,5 @@ Route::prefix('admin')
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/posts/{id}', 'HomeController@show')->name('showPost');
