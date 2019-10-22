@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\requestCategory;
 use App\Models\Category;
-use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Category\CategoryRepositoryInterface;
 
 class CategoriesController extends Controller
 {
     protected $CategoryRepository;
     
-    public function __construct(CategoryRepository $CategoryRepository)
+    public function __construct(CategoryRepositoryInterface $CategoryRepository)
     {
         $this->CategoryRepository = $CategoryRepository;
     }

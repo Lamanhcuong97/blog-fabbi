@@ -25,7 +25,7 @@ interface RepositoryInterface{
      *
      * @return Collection|Paginator
      */
-    public function index($data = []);
+    public function index();
 
     /**
      * Store.

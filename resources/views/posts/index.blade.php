@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('messages.ListPost') }}</div>
-                <a href="{{route('admin.posts.create')}}" class="btn btn-success" style="width:100px; margin: 10px;">{{__('create')}}</a>
+                <a href="{{route('admin.posts.create')}}" class="btn btn-success" style="width:100px; margin: 10px;">{{ __('create') }}</a>
                 <div class="card-body">
                    <table class="table">
                        <thead>
@@ -35,11 +35,11 @@
                                     <td>{{ $post->created_at ?? ''}}</td>
                                     <td>{{ $post->updated_at ?? ''}}</td>
                                     <td>
-                                        <a href="{{route('admin.posts.edit', $post->id)}}" class="btn btn-warning">{{__('edit')}}</a>
+                                        <a href="{{route('admin.posts.edit', $post->id)}}" class="btn btn-warning">{{ __('edit') }}</a>
                                         <form action="{{route('admin.posts.destroy', $post->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                            <button class="btn btn-danger">{{__('delete')}}</button>
+                                            <button class="btn btn-danger">{{ __('delete') }}</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -48,7 +48,7 @@
                        </tbody>
                        
                    </table>
-                   {{$posts->links()}}
+                   {{ $posts->links() }}
                 </div>
             </div>
         </div>

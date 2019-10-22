@@ -41,7 +41,7 @@ abstract class RepositoryAbstract
 
     public function index()
     {
-        $result = $this->model->all();
+        $result = $this->model->paginate(10);
 
         return $result;
     }
