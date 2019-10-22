@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('messages.ListPost') }}</div>
                 <a href="{{route('admin.posts.create')}}" class="btn btn-success" style="width:100px; margin: 10px;">{{ __('create') }}</a>
                 <div class="card-body">
-                   <table class="table">
+                <table class="table" id="table-posts" data-url="{{ route('admin.posts.list') }}">
                        <thead>
                            <tr>
                                <th>No</th>
@@ -16,13 +16,14 @@
                                <th>Content</th>
                                <th>Author</th>
                                <th>Categories</th>
+                               <th>Image</th>
                                <th>Created_at</th>
                                <th>Updated_at</th>
                                <th></th>
                            </tr>
                        </thead>
                        <tbody>
-                            @php  
+                            {{-- @php  
                                 $i = 1;
                             @endphp
                             @foreach($posts as $post)
@@ -32,7 +33,7 @@
                                     <td>{{ $post->content ?? ''}}</td>
                                     <td>{{ $post->user->name ?? ''}}</td>
                                     <td>{!! $post->categories->pluck('name') !!}</td>
-                                    <td><img src="{{asset('storage/' .$post->thumnail ?? 'images/noImage.png')}}" id="previewImage" style="width:80px;"></td>
+                                    <td><img src="{{asset('storage/' .$post->thumnail ?? 'storage/images/noImage.png')}}" id="previewImage" style="width:80px;"></td>
                                     <td>{{ $post->created_at ?? ''}}</td>
                                     <td>{{ $post->updated_at ?? ''}}</td>
                                     <td>
@@ -44,12 +45,11 @@
                                         </form>
                                     </td>
                                 </tr>
-                           @endforeach
+                           @endforeach --}}
                            
                        </tbody>
                        
                    </table>
-                   {{ $posts->links() }}
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@
 
 require('./bootstrap');
 require('./post');
+require('datatables.net-dt/js/dataTables.dataTables.min.js');
 
 window.Vue = require('vue');
 

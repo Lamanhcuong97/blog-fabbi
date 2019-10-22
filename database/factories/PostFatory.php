@@ -10,6 +10,6 @@ $factory->define(App\Models\Post::class, function (Faker $faker) {
         'title' => $faker->realText($maxNbChars = 30),
         'description' => $faker->realText($maxNbChars = 30),
         'content' => $faker->realText($maxNbChars = 100),
-        'thumnail' => 'image/noImage.png'
+        'thumnail' => 'images/noImage.png'
     ];
 });

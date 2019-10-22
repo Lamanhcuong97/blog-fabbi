@@ -12,11 +12,8 @@
 */
 
 
-Route::prefix('admin')
-    ->name('admin.')
-    ->middleware('isAdmin')
-    ->group(function(){
-    
+Route::prefix('admin')->name('admin.')->middleware('isAdmin')->group(function(){
+    Route::get('posts/list', 'Admin\PostsController@list')->name('posts.list');
     Route::resource('posts', 'Admin\PostsController');
     Route::resource('categories', 'Admin\CategoriesController');
 
