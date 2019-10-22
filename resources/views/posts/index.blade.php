@@ -32,6 +32,7 @@
                                     <td>{{ $post->content ?? ''}}</td>
                                     <td>{{ $post->user->name ?? ''}}</td>
                                     <td>{!! $post->categories->pluck('name') !!}</td>
+                                    <td><img src="{{asset('storage/' .$post->thumnail ?? 'images/noImage.png')}}" id="previewImage" style="width:80px;"></td>
                                     <td>{{ $post->created_at ?? ''}}</td>
                                     <td>{{ $post->updated_at ?? ''}}</td>
                                     <td>

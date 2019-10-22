@@ -43,12 +43,12 @@
         <option></option>
         @if(!is_null($categories))
             @foreach($categories as $category)
-                <option value="{{$category->id}}"
-                    @php 
+                <option value="{{$category->id}}" 
+                    <?php 
                         if (in_array($category->id, isset($post) ? $post->categories->pluck('id')->toArray() : (old('categories') ? old('categories') : []) )) {
                             echo 'selected';
                         }
-                    @endphp
+                    ?>
                  >{{$category->name}}</option>
             @endforeach
         @endif
@@ -63,4 +63,19 @@
             </div>
         @endif
 </div>
+<div class="form-group">
+    <label for="title">Image</label>
+    <input type="file" class="form-control" id="image" name="image" placeholder="Enter image" value="{{old('description', $post->description ?? '')}}">
+    <img src="{{asset('storage/' .$post->thumnail ?? 'images/noImage.png')}}" id="previewImage" style="width:130px ">
+    @if ($errors->has('title'))
+            <div class="row">
+            <div class="col-lg-8 col-md-10">
+                <span class="invalid-feedback" style="margin: 0px; display: block;" role="alert">
+                    <strong>{{ $errors->first('title') }}</strong>
+            </span>
+        </div>
+        </div>
+    @endif
+</div>
+
 

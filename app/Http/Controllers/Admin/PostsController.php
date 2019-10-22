@@ -55,13 +55,19 @@ class PostsController extends Controller
      */
     public function store(PostRequest $request)
     {
+        $this->validate($request, ['image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3072']);
         $data = $request->all();
+        if(isset($data['image'])){
+            $path = "images";
+            $name = 'image';
+            $data['thumnail'] = $this->PostRepository->storeFile($name, $path) ?? '';
+        }
         $post = $this->PostRepository->store($data);
 
         return redirect(route('admin.posts.index'))->with('success', 'Create post successful');
     }
 
-    /**
+    /**s
      * Display the specified resource.
      *
      * @param  int  $id
@@ -70,9 +76,8 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = $this->PostRepository->find($id);
-        $categories = [];
 
-        return view('posts.show', compact('post','categories'));
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -92,13 +97,19 @@ class PostsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $requests
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(PostRequest $request, $id)
     {
+        $this->validate($request, ['image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3072']);
         $data = $request->all();
+        if(isset($data['image'])){
+            $path = "images";
+            $name = 'image';
+            $data['thumnail'] = $this->PostRepository->storeFile($name, $path) ?? '';
+        }
         $post =$this->PostRepository->update( $id, $data);
 
         return redirect(route('admin.posts.index'))->with('success', 'Edit post successful');

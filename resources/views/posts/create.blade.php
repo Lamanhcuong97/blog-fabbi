@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('create post') }}</div>
 
                 <div class="card-body">
-                    <form action="{{ route('admin.posts.store') }}" id="create-item" method="post" novalidate>
+                    <form action="{{ route('admin.posts.store') }}" id="create-item" method="post" enctype="multipart/form-data">
                     @csrf
                     @include('posts.form')
                     <div class="form-group">

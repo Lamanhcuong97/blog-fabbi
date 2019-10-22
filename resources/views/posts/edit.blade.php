@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('update post') }}</div>
 
                 <div class="card-body">
-                    <form action="{{ route('admin.posts.update', $post->id) }}" id="create-item" method="post" novalidate>
+                    <form action="{{ route('admin.posts.update', $post->id) }}" id="create-item" method="post" enctype="multipart/form-data">
                     @method('patch')
                     @csrf
                     @include('posts.form')
