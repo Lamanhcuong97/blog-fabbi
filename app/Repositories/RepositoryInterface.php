@@ -37,7 +37,7 @@ interface RepositoryInterface{
     public function store($data);
 
     /**
-     * Show.
+     * Show
      *
      * @param int $id
      *

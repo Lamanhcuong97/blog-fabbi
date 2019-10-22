@@ -70,7 +70,7 @@ abstract class RepositoryAbstract
     }
 
     /**
-     * Delete
+     * Delete.
      *
      * @param $id
      * @return bool
