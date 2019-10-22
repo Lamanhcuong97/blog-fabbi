@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories;
-use App\Repositories\RepositoryInterface;
+namespace App\Repositories\Post;
+use App\Repositories\Post\PostRepositoryInterface;
 use App\Models\Post;
 use DB;
 use Auth;
+use App\Repositories\RepositoryAbstract;
 
-class PostRepository implements RepositoryInterface{
-    protected $model;
+class PostRepository extends RepositoryAbstract implements PostRepositoryInterface{
     /**
      * Construct
      *
@@ -16,6 +16,8 @@ class PostRepository implements RepositoryInterface{
     public function __construct()
     {
         $this->model = new Post;
+        $this->modelName = 'post';
+        $this->table = 'posts';
     }
 
       /**

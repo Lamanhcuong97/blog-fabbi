@@ -13,7 +13,7 @@
                     @include('posts.form')
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
-                            <button type="submit" class="btn btn-primary">{{__('edit')}}</button>
+                            <button type="submit" class="btn btn-primary">{{__('create')}}</button>
                             <a href="{{ route('admin.posts.index') }}" class="btn btn-default">{{__('cancel')}}</a>
                         </div>
                     </div>
