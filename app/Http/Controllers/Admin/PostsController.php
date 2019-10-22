@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Repositories\Post\PostRepositoryInterface;
-use App\Repositories\category\CategoryRepositoryInterface;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Http\Requests\PostRequest;
 
 class PostsController extends Controller

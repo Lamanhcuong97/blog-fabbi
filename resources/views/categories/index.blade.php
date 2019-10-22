@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('messages.ListCagetory') }}</div>
-                <a href="{{route('admin.categories.create')}}" class="btn btn-success" style="width:100px; margin: 10px;">{{__('create')}}</a>
+                <a href="{{route('admin.categories.create')}}" class="btn btn-success" style="width:100px; margin: 10px;">{{ __('create') }}</a>
                 <div class="card-body">
                    <table class="table">
                        <thead>
@@ -25,17 +25,17 @@
                             @endphp
                             @foreach($categories as $category)
                                 <tr>
-                                    <td scope="row">{{$category->id}}</td>
+                                    <td scope="row">{{ $category->id }}</td>
                                     <td><a href="{{route('admin.categories.show', $category->id)}}" >{{ $category->name ?? ''}}</a></td>
                                     <td>{{ $category->text ?? ''}}</td>
                                     <td>{{ $category->created_at ?? ''}}</td>
                                     <td>{{ $category->updated_at ?? ''}}</td>
                                     <td>
-                                        <a href="{{route('admin.categories.edit', $category->id)}}" class="btn btn-warning">{{__('edit')}}</a>
+                                        <a href="{{route('admin.categories.edit', $category->id)}}" class="btn btn-info">{{ __('edit') }}</a>
                                         <form action="{{route('admin.categories.destroy', $category->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                            <button class="btn btn-danger">{{__('delete')}}</button>
+                                            <button class="btn btn-danger">{{ __('delete') }}</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -44,7 +44,7 @@
                        </tbody>
                        
                    </table>
-                
+                   {{ $categories->links() }}
                 </div>
             </div>
         </div>
