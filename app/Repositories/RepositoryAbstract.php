@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+use Storage;
 
 abstract class RepositoryAbstract
 {
@@ -85,5 +86,37 @@ abstract class RepositoryAbstract
         }
 
         return false;
+    }
+
+        /**
+     * Store file.
+     *
+     * @param string $name
+     * @param string $path
+     *
+     * @return string
+     */
+    public function storeFile($name, $path)
+    {
+        if(request()->hasFile($name)) {
+            // Get filename with extension
+            $filenameWithExt = request()->file($name)->getClientOriginalName();
+            
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+          
+            // Get just ext
+            $extension = request()->file($name)->getClientOriginalExtension();
+            //Filename to store
+            $fileNameToStore = $filename.'_'.time().'_'. rand(1000, 9999) .'.'.$extension;
+          
+            // Upload Image
+            $path = request()->file($name)->storeAs($path, $fileNameToStore);
+            
+
+            Storage::url($path);
+
+            return $path;
+        }
     }
 }

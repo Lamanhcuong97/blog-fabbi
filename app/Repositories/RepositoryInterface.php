@@ -63,4 +63,14 @@ interface RepositoryInterface{
      * @return int
      */
     public function destroy($id);
+
+        /**
+     * Store file.
+     *
+     * @param string $name
+     * @param string $path
+     *
+     * @return string
+     */
+    public function storeFile($name, $path);
 }

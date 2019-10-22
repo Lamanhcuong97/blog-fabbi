@@ -72,7 +72,6 @@ class PostRepository extends RepositoryAbstract implements PostRepositoryInterfa
             $categories_id = $data['categories'];
             unset($data['categories']);
             unset($data['_token']);
-            $data['thumnail'] = 'image/noImage/png';
             $data['user_id'] =  Auth::id();
             $post = $this->model->create($data);
             $post->categories()->attach($categories_id);
@@ -114,7 +113,6 @@ class PostRepository extends RepositoryAbstract implements PostRepositoryInterfa
             $categories_id = $data['categories'];
             unset($data['categories']);
             unset($data['_token']);
-            $data['thumnail'] = 'image/noImage/png';
             $data['user_id'] =  Auth::id();
             $post = $this->model->findOrFail($id);
             $post->update($data);
