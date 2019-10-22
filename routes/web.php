@@ -26,3 +26,4 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/posts/{id}', 'HomeController@show')->name('showPost');
+Route::get('/listCategory', 'HomeController@listCategory')->name('listCategory');
