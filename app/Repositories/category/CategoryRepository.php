@@ -22,7 +22,8 @@ class CategoryRepository extends RepositoryAbstract implements CategoryRepositor
      *
      * @return Collection
      */
-    public function all(){
+    public function all()
+    {
         $categories = $this->model->with('posts')->orderBy('updated_at', 'DESC')->get();
 
         return $categories;
@@ -36,7 +37,8 @@ class CategoryRepository extends RepositoryAbstract implements CategoryRepositor
      *
      * @return
      */
-    public function store($data){
+    public function store($data)
+    {
         $category = $this->model->insert($data);
 
         return $category;
@@ -49,7 +51,22 @@ class CategoryRepository extends RepositoryAbstract implements CategoryRepositor
      *
      * @return Illuminate\Database\Eloquent\Model
      */
-    public function show($id){
+    public function show($id)
+    {
+        $category = $this->model->findOrFail($id);
+
+        return $category;
+    }
+
+    /**
+     * Find.
+     *
+     * @param int $id
+     *
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    public function find($id)
+    {
         $category = $this->model->findOrFail($id);
 
         return $category;
