@@ -24,16 +24,16 @@
                                 $i = 1;
                             @endphp
                             @foreach($categories as $key => $category)
-                                <tr>
+                                <tr id="tr_{{ $category->id }}">
                                     <td scope="row">{{ $category->id }}</td>
                                     <td><a href="{{ route('admin.categories.show', $category->id) }}" class="name">{{ $category->name ?? ''}}</a></td>
                                     <td class="text">{{ $category->text ?? ''}}</td>
-                                    <td>{{ $category->created_at ?? ''}}</td>
-                                    <td>{{ $category->updated_at ?? ''}}</td>
+                                    <td class="created_at">{{ $category->created_at ?? ''}}</td>
+                                    <td class="updated_at">{{ $category->updated_at ?? ''}}</td>
                                     <td>
                                         <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-info">{{ __('edit') }}</a>
                                         <button type="button" data-url="{{ route('admin.categories.find', $category->id) }}" 
-                                            data-url-update="{{ route('admin.categories.update', $category->id) }}"
+                                            data-url-update="{{ route('admin.categories.updateAjax', $category->id) }}"
                                             class="btn btn-primary quick-edit"  data-toggle="modal" data-target="#exampleModal">
                                             Quick Edit
                                         </button>
@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" id="update-ajax">Save changes</button>
+                                    <button type="button" data-id="" class="btn btn-primary" id="update-ajax">Save changes</button>
                                 </div>
                             </form>
                         </div>

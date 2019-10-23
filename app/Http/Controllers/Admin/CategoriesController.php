@@ -99,6 +99,13 @@ class CategoriesController extends Controller
         return redirect(route('admin.categories.index'))->with('message', 'success');
     }
 
+    public function updateAjax(requestCategory $request, $id)
+    {
+        $data = $request->all();
+        $category = $this->CategoryRepository->update($id, $data);
+
+        return response()->json($category);
+    }
     /**
      * Remove the specified resource from storage.
      *
