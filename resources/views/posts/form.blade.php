@@ -65,8 +65,8 @@
 </div>
 <div class="form-group">
     <label for="title">Image</label>
-    <input type="file" class="form-control" id="image" name="image" placeholder="Enter image" value="{{old('description', $post->description ?? '')}}">
-    <img src="{{asset('storage/' .$post->thumnail ?? 'images/noImage.png')}}" id="previewImage" style="width:130px ">
+    <input type="file" class="form-control" id="image" name="image" placeholder="Enter image" value="">
+    <img src="{{ isset( $post->thumnail ) ? asset('storage/' . $post->thumnail ) : '' }}" id="previewImage">
     @if ($errors->has('title'))
             <div class="row">
             <div class="col-lg-8 col-md-10">
