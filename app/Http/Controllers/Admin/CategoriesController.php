@@ -39,6 +39,12 @@ class CategoriesController extends Controller
         return view("categories.create");
     }
 
+    public function find($id)
+    {
+        $categories = $this->CategoryRepository->find($id);
+
+        return response()->json([ 'categories' => $categories]);
+    }
     /**
      * Store a newly created resource in storage.
      *
