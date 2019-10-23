@@ -41,7 +41,7 @@
     <label for="content">Categories</label>
     <select class="form-control" multiple data-live-search="true" id="categories" name="categories[]">
         <option></option>
-        @if(!is_null($categories))
+        @if(isset($categories) && !is_null($categories))
             @foreach($categories as $category)
                 <option value="{{$category->id}}" 
                     <?php 

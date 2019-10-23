@@ -53,7 +53,7 @@ class PostsController extends Controller
                         return $img;
                 })
                 ->addColumn('action', function($row){
-                       $action = "<a href='". route('admin.posts.edit', $row->id)."' class='btn btn-warning'>". __('edit')."</a><form action='".route('admin.posts.destroy', $row->id) ."' method='post'> <input type='hidden' name='_token' value='".csrf_token()."'>
+                       $action = "<a href='". route('admin.posts.edit', $row->id)."' class='btn btn-warning'>". __('edit')."</a><button class='btn btn-info btn-quick-edit' data-toggle='modal' data-target='#modalEditPost' data-url-update=".route('admin.posts.update', $row->id )." data-url=".route('admin.posts.find', $row->id ).">". __("quick edit") ."</button><form action='".route('admin.posts.destroy', $row->id) ."' method='post'> <input type='hidden' name='_token' value='".csrf_token()."'>
                        <input type='hidden' name='_method' value='DELETE'><button class='btn btn-danger'>". __("delete") ."</button></form>";
                         return $action;
                 })
@@ -94,7 +94,7 @@ class PostsController extends Controller
         return redirect(route('admin.posts.index'))->with('success', 'Create post successful');
     }
 
-    /**s
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -154,5 +154,25 @@ class PostsController extends Controller
         $post = $this->PostRepository->destroy($id);
 
         return redirect(route('admin.posts.index'))->with('success', 'Delete post successful');
+    }
+
+    /**
+     * Find a Post
+     *s
+     * @param int $ids
+     * @return JSON
+     */
+    public function find($id){
+        $post = $this->PostRepository->find($id);
+        $post->thumnail = asset($post->thumnail);
+        $categories = $this->CategoryRepository->all();
+        $post->categories = $post->categories->pluck('id')->toArray();
+        return response()->json(
+            [
+                'post' => $post,
+                'categories' => $categories,
+                'post_categories' => $post->categories
+            ]
+        );
     }
 }

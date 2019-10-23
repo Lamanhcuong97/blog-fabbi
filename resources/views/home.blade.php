@@ -10,7 +10,7 @@
                     <a href="{{ route('listCategory') }}">{{ __('messages.ListCagetory') }}</a>
                 </div>
                 <div class="card-body">
-                   <table class="table">
+                <table class="table" id="table-user-posts" data-url="{{route('posts.list')}}">
                        <thead>
                            <tr>
                                <th>No</th>
@@ -18,12 +18,13 @@
                                <th>Content</th>
                                <th>Author</th>
                                <th>Categories</th>
+                               <th>Thumnail</th>
                                <th>Created_at</th>
                                <th>Updated_at</th>
                            </tr>
                        </thead>
                        <tbody>
-                            @php  
+                            {{-- @php  
                                 $i = 1;
                             @endphp
                             @foreach( $posts as $post )
@@ -36,12 +37,11 @@
                                     <td>{{ $post->created_at ?? ''}}</td>
                                     <td>{{ $post->updated_at ?? ''}}</td>
                                 </tr>
-                           @endforeach
+                           @endforeach --}}
                            
                        </tbody>
                        
                    </table>
-                   {{ $posts->links() }}
                 </div>
             </div>
         </div>

@@ -56,3 +56,97 @@
     </div>
 </div>
 @endsection
+
+<!-- Modal Edit Post-->
+<div id="modalEditPost" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Update Post</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form action="" method="post" id="form-quick-update" enctype="multipart/form-data">
+            @csrf
+            @method('PATCH')
+            <div class="modal-body">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="">
+                        @if ($errors->has('title'))
+                                <div class="row">
+                                <div class="col-lg-8 col-md-10">
+                                    <span class="invalid-feedback" style="margin: 0px; display: block;" role="alert">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                </span>
+                            </div>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Description</label>
+                        <input type="text" class="form-control" id="description" name="description" placeholder="Enter description" value="">
+                        @if ($errors->has('title'))
+                                <div class="row">
+                                <div class="col-lg-8 col-md-10">
+                                    <span class="invalid-feedback" style="margin: 0px; display: block;" role="alert">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                </span>
+                            </div>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Content</label>
+                        <textarea class="form-control" rows="3" id="content" name="content" placeholder="Enter content"></textarea>
+                        @if ($errors->has('content'))
+                                <div class="row">
+                                <div class="col-lg-8 col-md-10">
+                                    <span class="invalid-feedback" style="margin: 0px; display: block;" role="alert">
+                                        <strong>{{ $errors->first('content') }}</strong>
+                                    </span>
+                                </div>
+                                </div>
+                            @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Categories</label>
+                        <select class="form-control" multiple data-live-search="true" id="categories" name="categories[]">
+                            <option></option>
+                        </select>
+                        @if ($errors->has('categories'))
+                                <div class="row">
+                                <div class="col-lg-8 col-md-10">
+                                    <span class="invalid-feedback" style="margin: 0px; display: block;" role="alert">
+                                        <strong>{{ $errors->first('categories') }}</strong>
+                                    </span>
+                                </div>
+                                </div>
+                            @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Image</label>
+                        <input type="file" class="form-control" id="image" name="image" placeholder="Enter image" value="">
+                        <img src="" id="previewImage" style="width:130px ">
+                        @if ($errors->has('title'))
+                                <div class="row">
+                                <div class="col-lg-8 col-md-10">
+                                    <span class="invalid-feedback" style="margin: 0px; display: block;" role="alert">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                </span>
+                            </div>
+                            </div>
+                        @endif
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success btn-quick-update" >Update</button>
+            
+            </div>
+        </form>
+      </div>
+  
+    </div>
+  </div>
