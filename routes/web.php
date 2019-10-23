@@ -18,6 +18,7 @@ Route::prefix('admin')->name('admin.')->middleware('isAdmin')->group(function(){
     Route::resource('posts', 'Admin\PostsController');
     Route::resource('categories', 'Admin\CategoriesController');
     Route::get('categories/find/{id}', 'Admin\CategoriesController@find')->name('categories.find');
+    Route::post('categories/updateAjax/{id}', 'Admin\CategoriesController@updateAjax')->name('categories.updateAjax');
 
 });
 
