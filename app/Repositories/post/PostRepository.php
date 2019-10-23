@@ -29,7 +29,7 @@ class PostRepository extends RepositoryAbstract implements PostRepositoryInterfa
      * @return Illuminate\Database\Eloquent\Model
      */
     public function find($id){
-        $post = $this->model->findOrFail($id);
+        $post = $this->model->with(['user', 'categories'])->findOrFail($id);
 
         return $post;
     }

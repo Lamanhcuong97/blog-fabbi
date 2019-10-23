@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\Post\PostRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use DataTables;
 
 class HomeController extends Controller
 {
@@ -43,6 +44,29 @@ class HomeController extends Controller
         $categories = $this->CategoryRepository->index();
 
         return view('listCategory', compact('categories'));
+
+    }
+
+    public function list() {
+        $data = $this->PostRepository->index();
+
+        return  Datatables::of($data)
+                ->addColumn('author', function($row){
+
+                        return $row->user->name ;
+                })
+                ->addColumn('categories', function($row){
+
+                        return $row->categories->pluck('name');
+                })
+                ->addColumn('thumnail', function($row){
+                        $url= asset('storage/'.$row->thumnail);
+                        $img = "<img src='".$url."' border='0' width='40' class='img-rounded' align='center' />";
+
+                        return $img;
+                })
+                ->rawColumns(['thumnail'])
+                ->make(true);
 
     }
 }
