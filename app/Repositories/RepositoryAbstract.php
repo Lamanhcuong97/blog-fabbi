@@ -42,7 +42,7 @@ abstract class RepositoryAbstract
 
     public function index()
     {
-        $result = $this->model->paginate(10);
+        $result = $this->model->select('*');
 
         return $result;
     }

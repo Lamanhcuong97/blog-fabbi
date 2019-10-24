@@ -39,3 +39,34 @@ $(document).on('click', '#update-ajax', function(){
         }
     });
 });
+
+$(document).ready( function(){
+    let url = $('#list-category').attr('data-url');
+    let urlAdmin = $('#admin-list-category').attr('data-url-admin');
+    $('#list-category').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: url,
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'name', name: 'name' },
+            { data: 'text', name: 'text' },
+            { data: 'created_at', name: 'created_at' },
+            { data: 'updated_at', name: 'updated_at' }
+        ]
+    });
+    
+    $('#admin-list-category').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: urlAdmin,
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'name', name: 'name' },
+            { data: 'text', name: 'text' },
+            { data: 'created_at', name: 'created_at' },
+            { data: 'updated_at', name: 'updated_at' },
+            { data: 'action', name: 'action', orderable: false, searchable: false },
+        ]
+    }); 
+});

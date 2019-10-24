@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\requestCategory;
 use App\Models\Category;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use DataTables;
 
 class CategoriesController extends Controller
 {
@@ -25,10 +26,29 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = $this->CategoryRepository->index();
-
         return view("categories.index", compact("categories"));
     }
 
+    public function listCategoryDataTables()
+    {
+        $categories = $this->CategoryRepository->index();
+        
+        return DataTables::of($categories)
+        ->addColumn('action', function ($row) {
+            return "<a href='" . route('admin.categories.edit', $row->id) . "' class='btn btn-info'>" . __('edit') . "</a>
+            <button type='button' data-url=" . route('admin.categories.find', $row->id) . " 
+                data-url-update=" . route('admin.categories.updateAjax', $row->id) . "
+                class='btn btn-primary quick-edit'  data-toggle='modal' data-target='#exampleModal'>
+                Quick Edit
+            </button>
+            <form action=" . route('admin.categories.destroy', $row->id) . " method='post'>
+            <input type='hidden' name='_method' value='DELETE'>
+            <input type='hidden' name='_token' value='".csrf_token()."'>
+            <button class='btn btn-danger'>" . __('delete') . "</button>
+            </form>";
+        })
+        ->make(TRUE);
+    }
     /**
      * Show the form for creating a new resource.
      *

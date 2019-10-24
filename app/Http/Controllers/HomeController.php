@@ -44,7 +44,13 @@ class HomeController extends Controller
         $categories = $this->CategoryRepository->index();
 
         return view('listCategory', compact('categories'));
+    }
 
+    public function listCategoryDataTables()
+    {
+        $categories = $this->CategoryRepository->index();
+
+        return DataTables::of($categories)->make(true);
     }
 
     public function list() {
