@@ -10,7 +10,7 @@
                     <span>{{ __('messages.ListCagetory') }}</span>
                 </div>
                 <div class="card-body">
-                   <table class="table">
+                   <table class="table" id="list-category" data-url="{{ route('listCategoryDataTables') }}">
                        <thead>
                             <tr>
                                <th>No</th>
@@ -27,7 +27,7 @@
                             @foreach($categories as $category)
                                 <tr>
                                     <td scope="row">{{ $category->id }}</td>
-                                    <td><a href="{{route('admin.categories.show', $category->id)}}" >{{ $category->name ?? ''}}</a></td>
+                                    <td>{{ $category->name ?? ''}}</td>
                                     <td>{{ $category->text ?? ''}}</td>
                                     <td>{{ $category->created_at ?? ''}}</td>
                                     <td>{{ $category->updated_at ?? ''}}</td>
@@ -37,7 +37,6 @@
                        </tbody>
                        
                    </table>
-                   {{ $categories->links() }}
                 </div>
             </div>
         </div>

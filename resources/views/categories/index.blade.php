@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('messages.ListCagetory') }}</div>
                 <a href="{{ route('admin.categories.create') }}" class="btn btn-success" style="width:100px; margin: 10px;">{{ __('create') }}</a>
                 <div class="card-body">
-                   <table class="table">
+                   <table class="table" id="admin-list-category" data-url-admin="{{ route('admin.categories.listCategoryDataTables') }}">
                        <thead>
                            <tr>
                                <th>No</th>
@@ -45,10 +45,8 @@
                                     </td>
                                 </tr>
                            @endforeach
-                       </tbody>
-                       
+                       </tbody>   
                    </table>
-                   {{ $categories->links() }}
                 </div>
 
                 <!-- Modal -->
