@@ -61,7 +61,7 @@ class HomeController extends Controller
                 })
                 ->addColumn('thumnail', function($row){
                         $url= asset('storage/'.$row->thumnail);
-                        $img = "<img src='".$url."' border='0' width='40' class='img-rounded' align='center' />";
+                        $img = "<img src='" . $url . "' border='0' width='40' class='img-rounded' align='center' />";
 
                         return $img;
                 })

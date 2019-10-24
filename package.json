@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "datatables.net": "^1.10.20",
-        "datatables.net-dt": "^1.10.20"
+        "datatables.net-dt": "^1.10.20",
+        "jquery-file-upload": "^4.0.11"
     }
 }

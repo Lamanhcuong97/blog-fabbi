@@ -10,7 +10,7 @@
                     <a href="{{ route('listCategory') }}">{{ __('messages.ListCagetory') }}</a>
                 </div>
                 <div class="card-body">
-                <table class="table" id="table-user-posts" data-url="{{route('posts.list')}}">
+                <table class="table" id="table-user-posts" data-url="{{ route('posts.list') }}">
                        <thead>
                            <tr>
                                <th>No</th>
@@ -24,20 +24,6 @@
                            </tr>
                        </thead>
                        <tbody>
-                            {{-- @php  
-                                $i = 1;
-                            @endphp
-                            @foreach( $posts as $post )
-                                <tr>
-                                    <td scope="row">{{ $post->id }}</td>
-                                    <td><a href="{{route('showPost', $post->id)}}" >{{ $post->title ?? ''}}</a></td>
-                                    <td>{{ $post->content ?? ''}}</td>
-                                    <td>{{ $post->user->name ?? ''}}</td>
-                                    <td>{!! $post->categories->pluck('name') !!}</td>
-                                    <td>{{ $post->created_at ?? ''}}</td>
-                                    <td>{{ $post->updated_at ?? ''}}</td>
-                                </tr>
-                           @endforeach --}}
                            
                        </tbody>
                        

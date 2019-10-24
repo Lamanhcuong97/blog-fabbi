@@ -120,7 +120,7 @@ class PostRepository extends RepositoryAbstract implements PostRepositoryInterfa
             $post->categories()->sync($categories_id);
             DB::commit();
                 
-            return true;
+            return $post;
         } catch (Exception $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());

@@ -47,19 +47,18 @@ class PostsController extends Controller
                         return $row->categories->pluck('name');
                 })
                 ->addColumn('thumnail', function($row){
-                        $url= asset('storage/'.$row->thumnail);
-                        $img = "<img src='".$url."' border='0' width='40' class='img-rounded' align='center' />";
+                        $url= asset('storage/' . $row->thumnail );
+                        $img = "<img src='" . $url . "' border='0' width='40' class='img-rounded' align='center' />";
 
                         return $img;
                 })
                 ->addColumn('action', function($row){
-                       $action = "<a href='". route('admin.posts.edit', $row->id)."' class='btn btn-warning'>". __('edit')."</a><button class='btn btn-info btn-quick-edit' data-toggle='modal' data-target='#modalEditPost' data-url-update=".route('admin.posts.update', $row->id )." data-url=".route('admin.posts.find', $row->id ).">". __("quick edit") ."</button><form action='".route('admin.posts.destroy', $row->id) ."' method='post'> <input type='hidden' name='_token' value='".csrf_token()."'>
-                       <input type='hidden' name='_method' value='DELETE'><button class='btn btn-danger'>". __("delete") ."</button></form>";
+                       $action = "<a href='" . route('admin.posts.edit', $row->id) . "' class='btn btn-warning'>" . __('edit') . "</a><button class='btn btn-info btn-quick-edit' data-toggle='modal' data-target='#modalEditPost' data-url-update=".route('admin.posts.quickUpdate', $row->id )." data-url=".route('admin.posts.find', $row->id ).">". __("quick edit") ."</button><form action='".route('admin.posts.destroy', $row->id) ."' method='post'> <input type='hidden' name='_token' value='".csrf_token()."'>
+                       <input type='hidden' name='_method' value='DELETE'><button class='btn btn-danger'>" . __("delete") . "</button></form>";
                         return $action;
                 })
                 ->rawColumns(['action', 'thumnail'])
                 ->make(true);
-
     }
 
     /**
@@ -84,11 +83,13 @@ class PostsController extends Controller
     {
         $this->validate($request, ['image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3072']);
         $data = $request->all();
+
         if(isset($data['image'])){
             $path = "images";
             $name = 'image';
             $data['thumnail'] = $this->PostRepository->storeFile($name, $path) ?? '';
         }
+
         $post = $this->PostRepository->store($data);
 
         return redirect(route('admin.posts.index'))->with('success', 'Create post successful');
@@ -131,12 +132,14 @@ class PostsController extends Controller
     public function update(PostRequest $request, $id)
     {
         $this->validate($request, ['image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3072']);
-        $data = $request->all();
+        $data = $request->all(); 
+
         if(isset($data['image'])){
             $path = "images";
             $name = 'image';
             $data['thumnail'] = $this->PostRepository->storeFile($name, $path) ?? '';
         }
+
         $post =$this->PostRepository->update( $id, $data);
 
         return redirect(route('admin.posts.index'))->with('success', 'Edit post successful');
@@ -164,7 +167,7 @@ class PostsController extends Controller
      */
     public function find($id){
         $post = $this->PostRepository->find($id);
-        $post->thumnail = asset($post->thumnail);
+        $post->thumnail = asset( 'storage/' . $post->thumnail);
         $categories = $this->CategoryRepository->all();
         $post->categories = $post->categories->pluck('id')->toArray();
         return response()->json(
@@ -175,4 +178,44 @@ class PostsController extends Controller
             ]
         );
     }
+
+    /**
+     * Quick Update a Post
+     *s
+     * @param int $idss
+     * @return JSON
+     */
+    public function quickUpdate(Request $request, $id ){
+        $this->validate($request, ['image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3072']);
+        $data = $request->all(); 
+        
+        if(isset($data['image'])){
+            $path = "images";
+            $name = 'image';
+            $data['thumnail'] = $this->PostRepository->storeFile($name, $path) ?? '';
+        }
+
+        $post =$this->PostRepository->update( $id, $data);
+        if(!$post){
+            
+            return response()->json(
+                [
+                    'error' => 'Update failed !!!',
+                ]
+            );
+        }
+
+        $post->thumnail = asset( 'storage/' . $post->thumnail);
+        $categories = $this->CategoryRepository->all();
+        $post->categories = $post->categories->pluck('name')->toArray();
+
+        return response()->json(
+            [
+                'post' => $post,
+                'categories' => $categories,
+                'post_categories' => $post->categories
+            ]
+        );
+    }
+
 }

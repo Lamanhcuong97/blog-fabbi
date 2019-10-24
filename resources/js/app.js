@@ -8,6 +8,8 @@ require('./bootstrap');
 require('./post');
 require('./category');
 require('datatables.net-dt/js/dataTables.dataTables.min.js');
+require('jquery-file-upload/js/jquery.uploadfile.min.js');
+
 
 window.Vue = require('vue');
 
